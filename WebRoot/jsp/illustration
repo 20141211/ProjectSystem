@@ -1,0 +1,9 @@
+项目系统模块用struts框架完成，在struts.xml中加入<constant name="struts.action.extension" value="action" />,action请求都要加上.action
+基本信息和需求用      el表达式+jstl   request取值
+模块功能和计划用     ognl表达式和struts标签     值栈存值取值 模型驱动
+
+
+
+
+
+

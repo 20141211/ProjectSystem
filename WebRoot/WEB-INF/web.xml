@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <display-name></display-name>	
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+  <filter>
+  	<filter-name>filter</filter-name>
+  	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>filter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping> 
+  
+  <servlet>
+  	<servlet-name>CoreServlet</servlet-name>
+  	<servlet-class>servlet.CoreServlet</servlet-class>
+  	<init-param>
+	 	<param-name>myServletMapping</param-name>
+	 	<param-value>classPackage.properties</param-value>
+ 	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CoreServlet</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <!--验证码  -->
+  <servlet>
+  	<servlet-name>CheckCodeServlet</servlet-name>
+  	<servlet-class>servlet.CheckCodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CheckCodeServlet</servlet-name>
+  	<url-pattern>/CheckCodeServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>SelectPositionServlet</servlet-name>
+  	<servlet-class>servlet.ajax.SelectPositionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SelectPositionServlet</servlet-name>
+  	<url-pattern>/SelectPositionServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>SelectEmpByPosition</servlet-name>
+  	<servlet-class>servlet.ajax.SelectEmpByPosition</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SelectEmpByPosition</servlet-name>
+  	<url-pattern>/SelectEmpByPosition</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ChatAjax</servlet-name>
+  	<servlet-class>servlet.ajax.ChatAjax</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ChatAjax</servlet-name>
+  	<url-pattern>/ChatAjax</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>AddMessageAjax</servlet-name>
+  	<servlet-class>servlet.ajax.AddMessageAjax</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AddMessageAjax</servlet-name>
+  	<url-pattern>/AddMessageAjax</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>GetLogCountAjax</servlet-name>
+  	<servlet-class>servlet.ajax.GetLogCountAjax</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GetLogCountAjax</servlet-name>
+  	<url-pattern>/GetLogCountAjax</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>GetAllManager</servlet-name>
+  	<servlet-class>servlet.ajax.GetAllManager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GetAllManager</servlet-name>
+  	<url-pattern>/GetAllManager</url-pattern>
+  </servlet-mapping>
+  
+
+</web-app>

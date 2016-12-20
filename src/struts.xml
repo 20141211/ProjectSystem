@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<constant name="struts.action.extension" value="action" /> 
+	<package name="/" extends="struts-default">
+	
+		<!-- project -->
+		<action name="showAllProject" class="action.ProjectAction" method="showAll">
+			<result name="go" >/jsp/project/showAll.jsp</result>
+		</action>
+		<action name="project" class="action.ProjectAction">
+			<result name="add" type="chain">showAllProject</result>
+			<result name="delete" type="chain">showAllProject</result>
+			<result name="edit" type="chain">showAllProject</result>
+		</action>
+		
+		<!-- demand -->
+		<action name="Demand" class="action.DemandAction" >
+			<result name="go">/jsp/demand/showAll.jsp</result>
+			<result name="add" type="chain">
+				<param name="actionName">Demand</param>  
+				<param name="method">showAll</param>  
+			</result>
+			<result name="remove" type="chain">
+				<param name="actionName">Demand</param>
+				<param name="method">showAll</param>
+			</result>
+			<result name="edit" type="chain">
+				<param name="actionName">Demand</param>
+				<param name="method">showAll</param>
+			</result>
+		</action>
+		
+		<!-- module -->
+		<action name="module_*" class="action.ModuleAction" method="{1}">
+			<result name="go">/jsp/module/showAll.jsp</result>
+			<result name="add" type="chain">
+				<param name="actionName">module_showAll</param>
+			</result>
+			<result name="remove" type="chain">module_showAll</result>
+			<result name="edit" type="chain">module_showAll</result>
+		</action>
+		
+		
+		<!-- function -->
+		<action name="function_*" class="action.FunctionAction" method="{1}">
+			<result name="go">/jsp/function/showAll.jsp</result>
+			<result name="add" type="chain">function_showAll</result>
+			<result name="remove" type="chain">function_showAll</result>
+			<result name="edit" type="chain">function_showAll</result>
+		</action>
+		
+		<!-- plan -->
+		<action name="plan_*" class="action.PlanAction" method="{1}">
+			<result name="go">/jsp/plan/showAll.jsp</result>
+			<result name="add" type="chain">plan_showAll</result>
+			<result name="remove" type="chain">plan_showAll</result>
+			<result name="edit" type="chain">plan_showAll</result>
+			<result name="query" >/jsp/plan/showAll.jsp</result>
+		</action>
+		
+	</package>
+</struts>
