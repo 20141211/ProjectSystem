@@ -1,0 +1,56 @@
+java编程命名规则：------------------------------------摘自王波老师JavaEE课件
+包:以名词命名，反写域名；全部小写 
+ com.se.test
+接口：以形容词命名；每个单词首字母大写
+ Runable
+类：以名词命名；每个单词首字母大写
+ HelloWorld
+变量：以名词命名；首字母小写其他字母大写
+ firstName
+常量：以名词命名；全部大写
+ HEIGHT
+方法：以动词+名词命名；首字母小写其他字母大写
+ getFirstName()
+
+Java Bean编写规范:------------------------------------摘自王波老师JavaEE课件
+JavaBean类必须是公共类
+JavaBean类中必须包含一个空的构造函数
+JavaBean类中的属性只能是private
+属性采用驼峰法式命名规则
+属性只能通过相对应的getter/setter方法访问
+属性对应的getter/setter方法的命名，为get/set接首字母大写的属性命名
+如果属性首字母为小写第二个字母为大写，则get/set接首字母依然小写
+严谨定义属性的首字母大写
+
+
+
+关系型数据表编写规范：
+数据表强求用驼峰法，因为sql不区分其大小写
+表的命名：项目名_表名，表名写全单词，列名过长时使用缩写
+ eg.ps_employee
+列名中遇到两个单词时，连写
+ eg.empno 理由：这样可以区分与表名的命名规则，见名知意
+中间表命名：A表名后半部分_B表名后半部分
+ eg.student_course
+中间表外键的列名：表名后半部分+Id
+ eg.stuId，cId
+
+
+dao层用
+ select，update，insert，delete
+service层用
+ get，load,add,remove,refresh，edit
+action
+ show,edit
+
+
+
+
+
+
+
+
+
+
+
+

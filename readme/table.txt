@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>选项卡-http://www.mb5u.com</title>
+<style type=text/css>
+td { 
+  font-size: 12px;
+  color: #000000;
+  line-height: 150%;
+  }
+.sec1 { 
+  background-color: #f8f8f8;
+  cursor: hand;
+  color: #000000;
+  border-left: 1px solid #FFFFFF;
+  border-top: 1px solid #FFFFFF;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid #FFFFFF
+  }
+.sec2 { 
+  background-color: #D4D0C8;
+  cursor: hand;
+  color: #000000;
+  border-left: 1px solid #FFFFFF; 
+  border-top: 1px solid #FFFFFF; 
+  border-right: 1px solid gray; 
+  font-weight: bold; 
+  }
+.main_tab {
+  background-color: #D4D0C8;
+  color: #000000;
+  border-left:1px solid #FFFFFF;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray; 
+  }
+</style>
+   <script language=javascript>
+function secBoard(n)
+{
+ for(i=0;i<secTable.cells.length;i++)
+  secTable.cells[i].className="sec1";
+ secTable.cells[n].className="sec2";
+ for(i=0;i<mainTable.tBodies.length;i++)
+  mainTable.tBodies[i].style.display="none";
+ mainTable.tBodies[n].style.display="block";
+}
+</script>
+</head>
+<body>
+   <table border=0 cellspacing=0 cellpadding=0 width=549 id=secTable>
+    <tr height=20 align=center> 
+     <td class=sec2 width=10% onclick="secBoard(0)">最新更新</td>
+     <td class=sec1 width=10% onclick="secBoard(1)">ASP类更新</td>
+     <td class=sec1 width=10% onclick="secBoard(2)">PHP类更新</td>
+     <td class=sec1 width=10% onclick="secBoard(3)">AJAX类更新</td>
+    </tr>
+   </table>
+   <table border=0 cellspacing=0 cellpadding=0 width=549 height=240 id=mainTable class=main_tab>
+    <tbody style="display:block;"> 
+    <tr> 
+     <td align=center valign=top> <br>
+      <br>
+      这里显示你全部更新的内容 </td>
+    </tr>
+    </tbody> <tbody style="display:none;"> 
+    <tr> 
+     <td align=center valign=top> <br>
+      <br>
+      这里显示ASP类更新的内容 </td>
+    </tr>
+    </tbody> <tbody style="display:none;"> 
+    <tr> 
+     <td align=center valign=top> <br>
+      <br>
+      这里是PHP类 </td>
+    </tr>
+    </tbody> <tbody style="display:none;"> 
+    <tr> 
+     <td align=center valign=top> <br>
+      <br>
+      这里是AJAX。</td>
+    </tr>
+    </tbody> 
+   </table>
+</body>
+</html>

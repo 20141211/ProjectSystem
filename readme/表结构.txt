@@ -1,0 +1,232 @@
+所有表结构都还没加入约束
+
+
+
+1、消息系统----------------程序员也有权限
+ 发送消息
+ 收件信息查看
+ 发件信息查看
+ 消息信息列表
+
+消息表(id,发送方id，接收方id，内容，数据库接受到消息的时间）
+ps_message(senderId,receiverId,message,time)----------------感觉用id麻烦
+----当用户量增多的时候，就用视图将每个用户对应的消息查出来
+create table ps_message(
+senderId number(5),
+receiverId number(5),
+message varchar2(255),
+time DATE
+)
+
+
+
+
+2、项目系统
+ 项目基本信息查看
+ 项目需求信息查看
+ 项目模块信息查看
+ 项目功能信息查看
+ 项目计划信息查看
+ 项目成本信息查看
+ 项目上传信息查看
+
+一个项目对应一个需求，一个需求对应多个模块，一个模块对应多个功能，一个功能对应多个计划，一个计划对应多个参与人员
+人员与项目多对多
+
+--一个客户可能对应对个项目，但一个项目值只属于一个客户；一般时候都是一个客户对应一个项目；我们希望可以通过客户找到项目，那么就要在项目中加入客户的id；同时我们也希望通过项目找到客户，那么就要在客户表中加入项目id，或者干脆通过项目表中的用户id通过链接简介查询
+项目表（id，，项目名称，客户名称，项目经理，开发人数，立项时间，最近更新时间，任务优先级，状态）
+--插入数据时，通过选择直接讲客户id和客户名称插入表中；因为觉得对这个表的查询是个常用操作，所以尽量让查询变得简介比较好，所以我觉得让冗余需要嵌套查询或者连接查询的字段比较好，比如说客户名称，负责人名称
+ps_project(id,clientId,name,clientName,managerName,startTime,updateTime,priority,state)
+
+
+
+
+---通过项目可以找到需求只是单向的，通过需求是找不到项目的，所以在需求中加入一个项目名称字段
+需求表（id，项目id，需求主题，所属项目名称，创建时间，更新时间）
+ps_demand(id，projectId,name,projectName,foundTime,updateTime)
+
+
+
+--所属项目名称和所属需求通过关联需求表查询
+模块表（id，需求id *：1，模块名称，标识，创建时间，所属项目，所属需求，优先级）
+ps_module(id,demandId,name,projectName,foundTime,priority)
+--可以通过优先级进行排序
+--列出所有模块，然后可以通过对需求进行筛选
+
+
+--可以通过优先级进行排序
+功能表（id，模块id *：1，功能名称，创建时间，所属项目，所属需求，所属模块，优先级）
+ps_function(id,moduleId,name,foundTime,priority)
+
+、
+--一个功能可能有多个任务计划，一个任务计划只隶属于一个功能
+任务计划表（id，功能id，员工人数，计划标题，项目名称，执行人数，负责人，工作量(人月)，最早开始时间，最晚开始时间，优先级，状态，是否超期，前置任务）
+ps_plan(id,funId，managerId,name,work,priority,state,period,earlist,latest,lastid)
+一个计划的员工人数可以通过查询语句查出来，也可以在一个表里留出一个字段
+
+修改计划表--------------------------------------------========
+计划表(id,功能id，员工id，计划名称，项目名称，模块名称，功能名称，人数，计划制定时间，最早开始时间，最晚开始时间，工期，工作量，优先级，状态，是否超期，前置任务）
+ps_plan(id,funId,empId， name,projectName,moduleName,funName,numOfEmp,foundTime,earlist,latest,period,work,priority,state,delay,lastid )
+计划_员工中间表（计划id，员工id）
+plan_emp(planId,empId)
+
+
+
+--一个任务计划对应多个人，一个人会有多个任务计划，
+--一个任务计划可能由多个人完成，一个人可能会参与多个任务计划，就需要一个任务计划分配表
+ps_distr(id,planId,empId,name)----这个中间表应该叫任务表我觉得更准确，一个计划一个员工确定了一个任务
+
+
+
+
+计划表是用来规划功能和员工之间的关系。===中间表.一个人可能会参与很多功能，一个功能可能需要很多人来完成，那么当一个人要完成一个功能，最终会形成一个计划
+同样，一个学生可能上多门课程，一门课程可能有多个学生学习，那么，当一个学生要学习一门课程，最终会得到一个成绩
+计划计划自己独有的属性，比如前置计划，计划名称，计划负责人，工期，优先级，状态，是否过期等
+同样，成绩表也是有自己独立的属性的，比如成绩界别，成绩绩点等
+
+
+一个项目对应多个人，一个人对应多个项目：
+project_emp(projectId,empId)
+
+
+3、客户系统----------------程序员也有权限
+ 客户信息查看
+
+客户表（id,公司名称，联系人，联系电话，联系地址，公司背景，合作次数）
+ps_client(id,firmName,linkman,linkphone,firmSumm,coConunt)
+create table ps_client(
+id number(5),
+firmName varchar2(50),
+linkman varchar2(20),
+linkphone number(11),
+firmSumm varchar2(1000),
+coConunt number(5)
+)
+
+
+4、人员系统------------------只有管理员有权限
+ 人员信息查看
+ 职务信息查看
+ 员工工作情况查看
+
+员工表（id,职位id，上司id，员工编号,密码,姓名，身份证号，性别，年龄，电子邮件，联系电话，月薪,账户）----------------------------加不加员工类型这个属性（职位表）是一个问题
+ps_employee(id,posiid,priorid,empno,password,empname,emptype,idCard,sex,age,email,phone,salary,account)
+职位表（id，职位名称，上级id)
+ps_position(id,posiname)
+权限表（id，上级权限，权限名称）
+ps_authority(id，priorid,authName)
+
+employee和position一对多
+position和authority多对多
+中间表（职位id，权限id）
+posi_auth(posiid,authid)
+
+
+create table ps_employee(
+id number(5),posiid number(5),empno number(8),password varchar2(20)empname varchar2(50),emptype varchar2(50),idCard varchar2(18),sex varchar(2),age number(2),email varchar2(50),phone number(11))
+
+
+
+
+
+
+5、系统管理-----------------只有管理员有权限
+ 添加用户
+ 添加角色（职位）
+ps_employee
+ps_position
+
+
+6、个人管理-------------------程序员也有权限
+ 个人信息查看
+ 任务信息查看
+ps_employee
+ps_任务表
+
+
+
+
+
+
+
+
+
+
+
+
+ps_project(id,clientId,name,clientName,manager,startTime,updateTime,priority,state)
+create table ps_project(
+id number(5),
+clientId number(5)，
+name varchar2(100),
+clientName varchar2(50),
+managerName varchar2(50),
+startTime daTe,
+updateTime date,
+priority varchar2(20),
+state varchar2(20)
+)
+
+--创建自增ID，名称为：表名_字段名_SEQ
+CREATE SEQUENCE ADVICE_ID_SEQ MINVALUE 1 NOMAXVALUE INCREMENT BY 1 START WITH 1 NOCACHE;
+create sequence project_id minvalue 1 nomaxvalue increment by 1 start with 1 nocache
+ 
+-- 为Insert操作创建触发器，无需在SQL语句里写NEXTVAL，名称为表名_INS_TRG
+CREATE OR REPLACE TRIGGER ADVICE_INS_TRG BEFORE INSERT ON ADVICE FOR EACH ROW WHEN(NEW.ID IS NULL)
+BEGIN
+SELECT ADVICE_ID_SEQ.NEXTVAL INTO :NEW.ID FROM DUAL;
+END;
+
+create or replace trigger project_ins_trg before insert on ps_project for each row when (new.id is null)
+begin
+select project_id .nextval into :new.id from dual;
+end;
+
+
+测试自增语句：
+insert into ps_project values(null,1,'1','1','1',to_date('1977-09-01','yyyy-mm-dd'),to_date('1977-09-01','yyyy-mm-dd'),'1','1')
+
+
+
+
+create sequence demand_id_seq minvalue 1 nomaxvalue increment by 1 start with 1 nocache
+
+
+create or replace trigger demand_ins_trg before insert on ps_demand for each row when (new.id is null)
+begin
+select demand_id_seq.nextval into :new.id from dual;
+end;
+
+
+
+create table ps_plan(
+id number(5),
+funId number(5),
+empId number(5),
+name varchar2(50),
+projectName varchar2(50),
+moduleName varchar2(50),
+funName varchar2(50),
+numOfEmp number(2),
+foundTime date,
+earlist date,
+latest date,
+period varchar2(20),
+work varchar(20),
+priority varchar(20),
+state varchar2(20),
+delay varchar2(10),
+lastId number(5)
+)
+
+
+create sequence globalSeq minvalue 1 nomaxvalue increment by 1 start with 1 nocache
+
+create or replace trigger plan_ins_trg before insert on ps_plan for each row when (new.id 
+is null)
+begin
+select globalSeq.nextval into :new.id from dual;
+end;
+
+
+
